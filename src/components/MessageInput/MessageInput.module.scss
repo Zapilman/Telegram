@@ -1,7 +1,20 @@
 .wrapper {
-	border: 1px solid black;
+	border-top: 1px solid black;
 
-	input {
-		width: 100%;
+	.inputGroup {
+		display: flex;
+		padding: 10px;
+		.messageContainer {
+			background-color: grey;
+			flex: 1 1 auto;
+
+			input {
+				width: 100%;
+			}
+		}
+		.microBtn {
+			background-color: grey;
+			margin-left: 10px;
+		}
 	}
 }

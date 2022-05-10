@@ -1,14 +1,13 @@
 .wrapper {
-	background-color: grey;
 	flex: 1 1 auto;
 
 	.chatContainer {
 		max-width: 80%;
-		border: 1px solid black;
 		margin: 0 auto;
 		width: 100%;
 		height: 100%;
 		display: flex;
-		flex-direction: column-reverse;
+		flex-direction: column;
+		overflow: hidden;
 	}
 }

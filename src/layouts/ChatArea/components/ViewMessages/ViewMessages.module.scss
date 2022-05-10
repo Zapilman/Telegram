@@ -1,0 +1,16 @@
+.wrapper {
+	flex: 1 1 auto;
+
+	padding-right: 30px;
+	overflow: auto;
+
+	.chatBox {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+
+		p:first-child {
+			margin-top: auto;
+		}
+	}
+}
