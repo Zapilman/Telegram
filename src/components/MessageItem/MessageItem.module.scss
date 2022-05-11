@@ -1,5 +1,14 @@
 .messageWrapper {
-	padding: 5px;
-	background-color: plum;
-	border-radius: 5px;
+	display: flex;
+	.messageText {
+		background-color: plum;
+		padding: 5px;
+		border-radius: 5px;
+	}
+
+	&_outer {
+		justify-content: flex-end;
+	}
+	&_inner {
+	}
 }

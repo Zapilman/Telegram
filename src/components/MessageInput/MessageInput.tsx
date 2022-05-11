@@ -2,9 +2,10 @@ import { FC, LegacyRef, useRef } from 'react'
 import cn from 'classnames'
 import styles from './MessageInput.module.scss'
 import { keyboardKey } from '@testing-library/user-event'
+import { MessageType } from '../../types/MessageItemTypes'
 
 interface Props {
-	sendMessage: (message: string) => void
+	sendMessage: (message: MessageType) => void
 }
 
 const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
@@ -19,7 +20,7 @@ const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
 			messageInputRef.current !== null &&
 			messageInputRef.current.value !== ''
 		) {
-			sendMessage(messageInputRef.current.value)
+			sendMessage({ text: messageInputRef.current.value, isUserFrom: true })
 			messageInputRef.current.value = ''
 		}
 	}
