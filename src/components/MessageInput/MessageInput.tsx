@@ -12,7 +12,7 @@ const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
 	const messageInputRef = useRef<HTMLInputElement | null>(null)
 
 	const messageOnChangeHandler = () => {
-		console.log(messageInputRef.current?.value)
+		//console.log(messageInputRef.current?.value)
 	}
 
 	const sendMessageHandler = () => {

@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
+import { io, Socket } from 'socket.io-client'
 
 import styles from './ChatArea.module.scss'
 
@@ -16,6 +17,20 @@ const ChatArea: FC<Props> = ({}: Props) => {
 		{ text: 'i am fine, what about you?', isUserFrom: false },
 	])
 	const chatBoxRef = useRef<HTMLDivElement>(null)
+	let socket = io('http://localhost:3000', { autoConnect: false })
+	socket.on('message', ({ data }) => {
+		console.log(data)
+		setMessages(prevState => [...prevState, data])
+	})
+	socket.on('connect', () => {
+		console.log('connected')
+	})
+	useEffect(() => {
+		socket.connect()
+		return () => {
+			socket.close()
+		}
+	})
 
 	useEffect(() => {
 		if (chatBoxRef.current !== null) {
@@ -26,7 +41,8 @@ const ChatArea: FC<Props> = ({}: Props) => {
 	}, [messages.length])
 
 	const addMessage = (message: MessageType) => {
-		setMessages(prevState => [...prevState, message])
+		//setMessages(prevState => [...prevState, message])
+		socket.emit('message', { data: message })
 	}
 
 	return (
