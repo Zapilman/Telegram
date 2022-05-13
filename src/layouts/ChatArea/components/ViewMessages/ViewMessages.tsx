@@ -14,12 +14,14 @@ const ViewMessages: FC<Props> = ({ messages, chatBoxRef }: Props) => {
 	return (
 		<div className={styles.wrapper} ref={chatBoxRef}>
 			<div className={styles.chatBox}>
-				{messages.map((message: MessageType) => {
+				{messages.map((message: MessageType, index: number) => {
 					return (
-						<MessageItem
-							messageText={message.text}
-							isFromUser={message.isUserFrom}
-						/>
+						<div key={index}>
+							<MessageItem
+								messageText={message.text}
+								isFromUser={message.authorName === 'Sara'}
+							/>
+						</div>
 					)
 				})}
 			</div>

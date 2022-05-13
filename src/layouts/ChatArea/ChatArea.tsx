@@ -10,27 +10,29 @@ import { MessageType } from '../../types/MessageItemTypes'
 
 interface Props {}
 const ChatArea: FC<Props> = ({}: Props) => {
-	const [messages, setMessages] = useState<MessageType[]>([
-		{ text: 'hi', isUserFrom: false },
-		{ text: 'hi', isUserFrom: true },
-		{ text: 'how are you?', isUserFrom: true },
-		{ text: 'i am fine, what about you?', isUserFrom: false },
-	])
+	const [messages, setMessages] = useState<MessageType[]>([])
 	const chatBoxRef = useRef<HTMLDivElement>(null)
-	let socket = io('http://localhost:3000', { autoConnect: false })
-	socket.on('message', ({ data }) => {
-		console.log(data)
-		setMessages(prevState => [...prevState, data])
-	})
-	socket.on('connect', () => {
-		console.log('connected')
-	})
+
+	let socket = io('http://localhost:3001')
+
 	useEffect(() => {
-		socket.connect()
+		socket.on('connect', () => {
+			console.log('connected')
+			socket.emit('join', { authorName: 'Sara' })
+		})
+
+		socket.on('message', (res: MessageType) => {
+			setMessages(prevState => [...prevState, res])
+		})
+
+		socket.emit('findAllMessages', {}, (response: MessageType[]) => {
+			setMessages(prevState => [...response])
+		})
+
 		return () => {
 			socket.close()
 		}
-	})
+	}, [])
 
 	useEffect(() => {
 		if (chatBoxRef.current !== null) {
@@ -40,9 +42,8 @@ const ChatArea: FC<Props> = ({}: Props) => {
 		}
 	}, [messages.length])
 
-	const addMessage = (message: MessageType) => {
-		//setMessages(prevState => [...prevState, message])
-		socket.emit('message', { data: message })
+	const addMessage = (message: string) => {
+		socket.emit('createMessage', { text: message, authorName: 'Sara' })
 	}
 
 	return (

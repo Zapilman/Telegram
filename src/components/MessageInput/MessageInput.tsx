@@ -5,7 +5,7 @@ import { keyboardKey } from '@testing-library/user-event'
 import { MessageType } from '../../types/MessageItemTypes'
 
 interface Props {
-	sendMessage: (message: MessageType) => void
+	sendMessage: (message: string) => void
 }
 
 const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
@@ -20,7 +20,7 @@ const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
 			messageInputRef.current !== null &&
 			messageInputRef.current.value !== ''
 		) {
-			sendMessage({ text: messageInputRef.current.value, isUserFrom: true })
+			sendMessage(messageInputRef.current.value)
 			messageInputRef.current.value = ''
 		}
 	}
