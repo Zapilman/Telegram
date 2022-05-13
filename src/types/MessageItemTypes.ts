@@ -1,4 +1,4 @@
 export type MessageType = {
 	text: string
-	isUserFrom: boolean
+	authorName: string
 }
