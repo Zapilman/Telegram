@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 type LoginCredentials = {
   login: string,
   password: string
-}
+} 
 
 const LoginPage: FC = () => {
 

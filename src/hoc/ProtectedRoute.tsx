@@ -1,19 +1,18 @@
-import { Navigate } from 'react-router-dom';
-import { Component, FC } from 'react';
+import { Navigate } from 'react-router-dom'
+import { Component, FC } from 'react'
 
 interface Props {
-  component: JSX.Element
+	component: JSX.Element
 }
 
-const ProtectedRoute: FC<Props> = ({component}: Props) => {
+const ProtectedRoute: FC<Props> = ({ component }: Props) => {
+	const isAuth = true
 
-  const isAuth = false;
+	if (!isAuth) {
+		return <Navigate to='/login' />
+	}
 
-  if (!isAuth) {
-    return <Navigate to="/login"/>;
-  }
+	return component
+}
 
-  return component;
-};
-
-export default ProtectedRoute;
+export default ProtectedRoute

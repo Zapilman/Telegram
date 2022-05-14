@@ -1,4 +1,4 @@
-import { FC, LegacyRef, useRef } from 'react'
+import { FC, LegacyRef, useRef, useState } from 'react'
 import cn from 'classnames'
 import styles from './MessageInput.module.scss'
 import { keyboardKey } from '@testing-library/user-event'
@@ -6,13 +6,20 @@ import { MessageType } from '../../types/MessageItemTypes'
 
 interface Props {
 	sendMessage: (message: string) => void
+	onChange?: () => void
+	whoIsTyping?: string
 }
 
-const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
+const MessageInput: FC<Props> = ({
+	sendMessage,
+	onChange,
+	whoIsTyping = '',
+}: Props) => {
 	const messageInputRef = useRef<HTMLInputElement | null>(null)
-
-	const messageOnChangeHandler = () => {
+	const onChangeHandler = () => {
 		//console.log(messageInputRef.current?.value)
+
+		onChange && onChange()
 	}
 
 	const sendMessageHandler = () => {
@@ -33,12 +40,15 @@ const MessageInput: FC<Props> = ({ sendMessage }: Props) => {
 
 	return (
 		<div className={cn(styles.wrapper)}>
+			<p>
+				{whoIsTyping} {whoIsTyping && 'is typing...'}
+			</p>
 			<div className={styles.inputGroup}>
 				<div className={styles.messageContainer}>
 					<input
 						ref={messageInputRef}
 						type='text'
-						onChange={messageOnChangeHandler}
+						onChange={onChangeHandler}
 						onKeyDown={clickEnterHandler}
 					/>
 				</div>
