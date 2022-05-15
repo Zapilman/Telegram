@@ -8,7 +8,8 @@ import MessageInput from '../../components/MessageInput/MessageInput'
 import ViewMessages from './components/ViewMessages/ViewMessages'
 import { MessageType } from '../../types/MessageItemTypes'
 import { addMessage, onTypingMessage } from './logic'
-import useDebounce from '../../hooks/useDebounce'
+import { useQuery } from '@apollo/client'
+import { getAllMessages } from '../../graphql/queries'
 
 interface Props {
 	socket: Socket
@@ -16,8 +17,24 @@ interface Props {
 const ChatArea: FC<Props> = ({ socket }: Props) => {
 	const [messages, setMessages] = useState<MessageType[]>([])
 	const [isTyping, setIsTyping] = useState<boolean>(false)
-	const [pep, setPep] = useState('')
+	const [whoIsTyping, setWhoIsTyping] = useState('')
 	const chatBoxRef = useRef<HTMLDivElement>(null)
+	const { loading, data } = useQuery(getAllMessages)
+
+	//waiting for messages and setting them up to the state
+	useEffect(() => {
+		if (!loading) {
+			setMessages(prevState => [
+				...prevState,
+				...[
+					...data.messages.map((message: MessageType) => ({
+						text: message.text,
+						authorName: message.authorName,
+					})),
+				],
+			])
+		}
+	}, [loading])
 
 	useEffect(() => {
 		socket.on('connect', () => {
@@ -26,15 +43,12 @@ const ChatArea: FC<Props> = ({ socket }: Props) => {
 		})
 
 		socket.on('message', (res: MessageType) => {
+			console.log(res)
 			setMessages(prevState => [...prevState, res])
 		})
 
 		socket.on('typing', (res: any) => {
-			setPep(res.isTyping ? 'Sara' : '')
-		})
-
-		socket.emit('findAllMessages', {}, (response: MessageType[]) => {
-			setMessages(prevState => [...response])
+			setWhoIsTyping(res.isTyping ? 'Sara' : '')
 		})
 
 		return () => {
@@ -45,8 +59,6 @@ const ChatArea: FC<Props> = ({ socket }: Props) => {
 	useEffect(() => {
 		if (chatBoxRef.current !== null) {
 			chatBoxRef.current.scrollTo(0, chatBoxRef.current.scrollHeight)
-			console.log(chatBoxRef.current.scrollHeight)
-			console.log(chatBoxRef.current)
 		}
 	}, [messages.length])
 
@@ -69,7 +81,7 @@ const ChatArea: FC<Props> = ({ socket }: Props) => {
 			<div className={cn(styles.chatContainer)}>
 				<ViewMessages messages={messages} chatBoxRef={chatBoxRef} />
 				<MessageInput
-					whoIsTyping={pep}
+					whoIsTyping={whoIsTyping}
 					onChange={() => onTypingMessage(setIsTyping)}
 					sendMessage={(message: string) => addMessage(message, socket)}
 				/>
