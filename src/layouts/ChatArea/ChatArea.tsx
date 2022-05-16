@@ -12,82 +12,85 @@ import { useQuery } from '@apollo/client'
 import { getAllMessages } from '../../graphql/queries'
 
 interface Props {
-	socket: Socket
+  socket: Socket
 }
-const ChatArea: FC<Props> = ({ socket }: Props) => {
-	const [messages, setMessages] = useState<MessageType[]>([])
-	const [isTyping, setIsTyping] = useState<boolean>(false)
-	const [whoIsTyping, setWhoIsTyping] = useState('')
-	const chatBoxRef = useRef<HTMLDivElement>(null)
-	const { loading, data } = useQuery(getAllMessages)
 
-	//waiting for messages and setting them up to the state
-	useEffect(() => {
-		if (!loading && data) {
-			setMessages(prevState => [
-				...prevState,
-				...[
-					...data.messages.map((message: MessageType) => ({
-						text: message.text,
-						authorName: message.authorName,
-					})),
-				],
-			])
-		}
-	}, [loading])
+const ChatArea: FC<Props> = ({socket}: Props) => {
+  const [messages, setMessages] = useState<MessageType[]>([])
+  const [isTyping, setIsTyping] = useState<boolean>(false)
+  const [whoIsTyping, setWhoIsTyping] = useState('')
+  const chatBoxRef = useRef<HTMLDivElement>(null)
+  const {loading, data, error} = useQuery(getAllMessages)
 
-	useEffect(() => {
-		socket.on('connect', () => {
-			console.log('connected')
-			socket.emit('join', { authorName: 'Sara' })
-		})
+  useEffect(() => {
+    if(error){
+      console.log(error);
+    }
+    if (!loading && data) {
+      setMessages(prevState => [
+        ...prevState,
+        ...[
+          ...data.messages.map((message: MessageType) => ({
+            text: message.text,
+            authorName: message.authorName,
+          })),
+        ],
+      ])
+    }
+  }, [loading, error])
 
-		socket.on('message', (res: MessageType) => {
-			console.log(res)
-			setMessages(prevState => [...prevState, res])
-		})
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connected')
+      socket.emit('join', {authorName: 'Sara'})
+    })
 
-		socket.on('typing', (res: any) => {
-			setWhoIsTyping(res.isTyping ? 'Sara' : '')
-		})
+    socket.on('message', (res: MessageType) => {
+      console.log(res)
+      setMessages(prevState => [...prevState, res])
+    })
 
-		return () => {
-			socket.close()
-		}
-	}, [])
+    socket.on('typing', (res: any) => {
+      setWhoIsTyping(res.isTyping ? 'Sara' : '')
+    })
 
-	useEffect(() => {
-		if (chatBoxRef.current !== null) {
-			chatBoxRef.current.scrollTo(0, chatBoxRef.current.scrollHeight)
-		}
-	}, [messages.length])
+    return () => {
+      socket.close()
+    }
+  }, [])
 
-	useEffect(() => {
-		let timer: any
-		if (isTyping) {
-			socket.emit('typing', { isTyping: true })
-			timer = setTimeout(() => {
-				socket.emit('typing', { isTyping: false })
-				setIsTyping(false)
-			}, 2000)
-		}
-		return () => {
-			timer && clearTimeout(timer)
-		}
-	}, [isTyping, socket])
+  useEffect(() => {
+    if (chatBoxRef.current !== null) {
+      chatBoxRef.current.scrollTo(0, chatBoxRef.current.scrollHeight)
+    }
+  }, [messages.length])
 
-	return (
-		<div className={cn(styles.wrapper)}>
-			<div className={cn(styles.chatContainer)}>
-				<ViewMessages messages={messages} chatBoxRef={chatBoxRef} />
-				<MessageInput
-					whoIsTyping={whoIsTyping}
-					onChange={() => onTypingMessage(setIsTyping)}
-					sendMessage={(message: string) => addMessage(message, socket)}
-				/>
-			</div>
-		</div>
-	)
+  useEffect(() => {
+    let timer: any
+    if (isTyping) {
+      socket.emit('typing', {isTyping: true})
+      timer = setTimeout(() => {
+        socket.emit('typing', {isTyping: false})
+        setIsTyping(false)
+      }, 2000)
+    }
+    return () => {
+      timer && clearTimeout(timer)
+    }
+  }, [isTyping, socket])
+
+  return (
+    <div className={cn(styles.wrapper)}>
+      <div className={cn(styles.chatContainer)}>
+        <ViewMessages messages={messages} chatBoxRef={chatBoxRef}/>
+        <MessageInput
+          whoIsTyping={whoIsTyping}
+          onChange={() => onTypingMessage(setIsTyping)}
+          sendMessage={(message: string) => addMessage(message, socket)}
+        />
+      </div>
+    </div>
+  )
 }
 
 export default ChatArea

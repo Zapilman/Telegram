@@ -3,6 +3,8 @@
 	padding: 1.5rem;
 	width: 250px;
 	transition: all 0.3s ease-in-out;
+	display: flex;
+	flex-direction: column;
 	&.close {
 		width: 100px;
 	}
@@ -31,6 +33,7 @@
 			}
 		}
 		.rightArrowIcon {
+			cursor: pointer;
 			position: absolute;
 			top: 50%;
 			right: -2.2rem;
@@ -42,6 +45,15 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			svg{
+				transition: all .3s ease;
+			}
+
+			&.closed{
+				svg	{
+					transform: rotate(180deg);
+				}
+			}
 		}
 	}
 
@@ -50,24 +62,38 @@
 		padding: 0;
 		margin: 1.5rem 0;
 		.option {
-			padding: 5px 0;
-			display: flex;
-			align-items: center;
 			border-radius: 5px;
 			transition: all 0.2s ease-in-out;
+			cursor: pointer;
 
-			span {
-				transition: all 0.3s ease;
-				white-space: nowrap;
-			}
 
-			&.fadeOut {
+			a {
+				padding: 5px 0;
+				text-decoration: none;
+				color: white;
+				display: flex;
+				align-items: center;
+				svg {
+					min-width: 3rem;
+				}
 				span {
-					opacity: 0;
-					pointer-events: none;
+					transition: all 0.3s ease;
+					white-space: nowrap;
+				}
+				&.fadeOut {
+					span {
+						opacity: 0;
+						pointer-events: none;
+					}
+				}
+				&.active{
+					color: red;
 				}
 			}
-			cursor: pointer;
+
+
+
+
 			&:hover {
 				background-color: grey;
 			}
@@ -75,13 +101,12 @@
 			&:not(:first-child) {
 				margin-top: 1rem;
 			}
-			svg {
-				min-width: 3rem;
-			}
+
 		}
 	}
 
 	.menuBar {
+		flex: 0 1 auto;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
