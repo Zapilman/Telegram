@@ -23,7 +23,7 @@ const ChatArea: FC<Props> = ({ socket }: Props) => {
 
 	//waiting for messages and setting them up to the state
 	useEffect(() => {
-		if (!loading) {
+		if (!loading && data) {
 			setMessages(prevState => [
 				...prevState,
 				...[
