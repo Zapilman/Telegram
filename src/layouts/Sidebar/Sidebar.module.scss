@@ -1,6 +1,11 @@
 .sidebarWrapper {
 	height: 100%;
 	padding: 1.5rem;
+	width: 250px;
+	transition: all 0.3s ease-in-out;
+	&.close {
+		width: 100px;
+	}
 
 	header {
 		position: relative;
@@ -19,6 +24,10 @@
 			}
 			.text {
 				margin: 0 1.5rem;
+				transition: all 0.3s ease;
+				&.fadeOut {
+					opacity: 0;
+				}
 			}
 		}
 		.rightArrowIcon {
@@ -36,10 +45,52 @@
 		}
 	}
 
+	.optionList {
+		list-style: none;
+		padding: 0;
+		margin: 1.5rem 0;
+		.option {
+			padding: 5px 0;
+			display: flex;
+			align-items: center;
+			border-radius: 5px;
+			transition: all 0.2s ease-in-out;
+
+			span {
+				transition: all 0.3s ease;
+				white-space: nowrap;
+			}
+
+			&.fadeOut {
+				span {
+					opacity: 0;
+					pointer-events: none;
+				}
+			}
+			cursor: pointer;
+			&:hover {
+				background-color: grey;
+			}
+
+			&:not(:first-child) {
+				margin-top: 1rem;
+			}
+			svg {
+				min-width: 3rem;
+			}
+		}
+	}
+
 	.menuBar {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: hidden;
 		.menu {
+			flex: 1 1 auto;
 		}
 		.bottomContent {
+			margin-bottom: 3rem;
 		}
 	}
 }
