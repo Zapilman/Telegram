@@ -9,6 +9,7 @@ import {
 	useQuery,
 	gql,
 } from '@apollo/client'
+import { AuthProvider } from './auth/authContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const client = new ApolloClient({
@@ -17,7 +18,7 @@ const client = new ApolloClient({
 })
 root.render(
 	<ApolloProvider client={client}>
-		<App />
+			<App />
 	</ApolloProvider>
 )
 

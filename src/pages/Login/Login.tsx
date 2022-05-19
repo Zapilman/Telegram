@@ -1,12 +1,14 @@
 import { FC } from 'react'
 import styles from './Login.module.scss'
 import { useForm } from 'react-hook-form'
+import useAuth from '../../auth/authContext';
 
 const LoginPage: FC = () => {
-	const { register, handleSubmit } = useForm()
+	const { register, handleSubmit } = useForm();
+	const {loading, error, login} = useAuth();
 
 	const onSubmit = (data: any) => {
-		console.log(data)
+		login(data.login, data.password);
 	}
 
 	return (

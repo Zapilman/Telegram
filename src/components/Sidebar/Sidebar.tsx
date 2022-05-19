@@ -7,12 +7,16 @@ import { AiOutlineArrowRight } from 'react-icons/ai'
 import cn from 'classnames'
 import styles from './Sidebar.module.scss'
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../auth/authContext';
 
 interface Props {
 }
 
 const Sidebar: FC<Props> = ({}: Props) => {
   const [isClosed, setIsClosed] = useState<boolean>(false)
+
+  const {logout} = useAuth();
+
   return (
     <nav className={cn(styles.sidebarWrapper, {[styles.close]: isClosed})}>
       <header>
@@ -75,11 +79,13 @@ const Sidebar: FC<Props> = ({}: Props) => {
         </div>
         <div className={styles.bottomContent}>
           <ul className={styles.optionList}>
-            <li className={cn(styles.option, {[styles.fadeOut]: isClosed})}>
-              <NavLink to='/kek' className={({isActive}) => cn({[styles.fadeOut]: isClosed, [styles.active]: isActive})}>
+            <li className={cn(styles.option, {[styles.fadeOut]: isClosed})} onClick={() => logout()}>
+              {/*<NavLink to='/kek' className={({isActive}) => cn({[styles.fadeOut]: isClosed, [styles.active]: isActive})}>
                 <BiLogOutCircle/>
                 <span>Log Out</span>
-              </NavLink>
+              </NavLink>*/}
+              <BiLogOutCircle/>
+              <span>Log Out</span>
             </li>
           </ul>
         </div>

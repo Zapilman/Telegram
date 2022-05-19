@@ -8,3 +8,13 @@ export const getAllMessages = gql`
 		}
 	}
 `
+
+export const getUserInfoToken = gql`
+ query($token: String!){
+  getUserInfo(token: $token) {
+    firstName,
+    secondName,
+    login
+  }
+}
+`

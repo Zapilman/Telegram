@@ -10,6 +10,7 @@ import { MessageType } from '../../types/MessageItemTypes'
 import { addMessage, onTypingMessage } from './logic'
 import { useQuery } from '@apollo/client'
 import { getAllMessages } from '../../graphql/queries'
+import useAuth from '../../auth/authContext';
 
 interface Props {
   socket: Socket
@@ -21,6 +22,8 @@ const ChatArea: FC<Props> = ({socket}: Props) => {
   const [whoIsTyping, setWhoIsTyping] = useState('')
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const {loading, data, error} = useQuery(getAllMessages)
+
+  const {user} = useAuth();
 
   useEffect(() => {
     if(error){
