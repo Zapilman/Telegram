@@ -14,7 +14,6 @@ function App() {
           <Route path={'/login'} element={<LoginPage/>}/>
           <Route path={'/news'} element={<ProtectedPage component={<NewsPage/>}/>}/>
           <Route path={''} element={<ProtectedPage component={<MainPage/>}/>}/>
-
           <Route path='*' element={<p>There's nothing here: 404!</p>}/>
         </Routes>
       </AuthProvider>

@@ -5,6 +5,7 @@
 	transition: all 0.3s ease-in-out;
 	display: flex;
 	flex-direction: column;
+	border-right: 1px solid white;
 	&.close {
 		width: 100px;
 	}
