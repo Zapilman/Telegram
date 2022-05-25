@@ -10,9 +10,9 @@ const ProtectedRoute: FC<Props> = ({component}: Props) => {
 
   const {user} = useAuth();
 
-  if (!user) {
+  /*if (!user) {
     return <Navigate to='/login'/>
-  }
+  }*/
 
   return component
 }

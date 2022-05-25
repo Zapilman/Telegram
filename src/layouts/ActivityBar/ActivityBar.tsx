@@ -4,6 +4,7 @@ import styles from './ActivityBar.module.scss'
 import { DialogType } from '../../types/DialogType';
 import DialogItem from '../../components/DialogItem/DialogItem';
 import { useNavigate } from 'react-router-dom';
+import Search from '../../components/Search/Search';
 
 
 interface Props {
@@ -30,11 +31,14 @@ const ActivityBar: FC<Props> = ({}: Props) => {
 
   return (
     <div className={cn(styles.wrapper)}>
-      <ul className={styles.dialogList}>
-        {fakeData.map((dialog: DialogType, index: number) => {
-          return <DialogItem dialog={dialog} key={index}/>
-        })}
-      </ul>
+      <div className={styles.dialogList}>
+        <Search/>
+        <ul>
+          {fakeData.map((dialog: DialogType, index: number) => {
+            return <DialogItem dialog={dialog} key={index}/>
+          })}
+        </ul>
+      </div>
     </div>
   )
 }

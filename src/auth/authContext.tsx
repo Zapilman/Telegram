@@ -19,7 +19,7 @@ const AuthContext = React.createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({children}: { children: ReactNode }): JSX.Element => {
   const [user, setUser] = useState<UserType>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
+  const [loadingInitial, setLoadingInitial] = useState<boolean>(false);
   const [error, setError] = useState<any>();
 
   const [getUserInfo, {data, error: queryError, called}] = useLazyQuery(getUserInfoToken);

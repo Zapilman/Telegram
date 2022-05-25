@@ -34,7 +34,6 @@
 			}
 		}
 		.rightArrowIcon {
-			cursor: pointer;
 			position: absolute;
 			top: 50%;
 			right: -2.2rem;
@@ -46,6 +45,9 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			z-index: 2;
+			cursor: pointer;
+
 			svg{
 				transition: all .3s ease;
 			}

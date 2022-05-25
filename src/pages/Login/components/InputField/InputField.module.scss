@@ -1,0 +1,17 @@
+
+
+.wrapper{
+  border-bottom: 1px white solid;
+  display: flex;
+  align-items: center;
+  svg{
+    margin: 0 10px 5px 0;
+    font-size: 20px;
+  }
+  input{
+    font-size: 20px !important;
+    all: unset;
+    width: 100%;
+    padding: 5px;
+  }
+}

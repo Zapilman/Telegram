@@ -10,10 +10,10 @@ const MainPage: FC = () => {
     reconnection: false,
   })
   return (
-    <LayOutWithSideBar>
-      <ActivityBar/>
-      <ChatArea socket={socket}/>
-    </LayOutWithSideBar>
+      <>
+        <ActivityBar/>
+        <ChatArea socket={socket}/>
+      </>
   )
 }
 

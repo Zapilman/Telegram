@@ -1,7 +1,22 @@
+
+
+@keyframes slideInRight {
+	0%{
+		left: -100%;
+	}
+	100%{
+		left: 0;
+	}
+}
+
+
 .wrapper {
 	height: 100%;
 	width: 400px;
 	overflow-y: auto;
+	background-color: black;
+	position: relative;
+
 
 	&::-webkit-scrollbar{
 		width: 5px;
@@ -21,6 +36,11 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
+		position: absolute;
+		width: 100%;
+		animation: .3s linear 0s slideInRight;
+		background-color: #212121;
+
 
 		li{
 			&:not(:first-child){

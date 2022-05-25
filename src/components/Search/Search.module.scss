@@ -1,0 +1,22 @@
+
+
+.wrapper{
+  display: flex;
+  background-color: rgb(44, 44, 44);
+
+  &.SearchIconLeft{
+    flex-direction: row-reverse;
+  }
+  input{
+    all: unset;
+    width: 100%;
+    background-color: rgb(44, 44, 44);
+  }
+
+  button{
+    all: unset;
+    color: white;
+    border: none;
+    background-color: rgb(44, 44, 44);
+  }
+}

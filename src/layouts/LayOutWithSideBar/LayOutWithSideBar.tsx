@@ -1,16 +1,15 @@
 import { FC, PropsWithChildren } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import styles from './LayOutWithSideBar.module.scss';
+import { Outlet } from 'react-router-dom';
 
-interface Props {
 
-}
 
-const LayOutWithSideBar: FC<PropsWithChildren<Props>> = ({children}) => {
+const LayOutWithSideBar: FC = () => {
   return (
     <div className={styles.layout}>
       <Sidebar/>
-      {children}
+      <Outlet/>
     </div>
   )
 }

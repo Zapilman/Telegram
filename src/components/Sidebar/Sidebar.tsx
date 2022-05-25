@@ -6,13 +6,14 @@ import { BsFillChatDotsFill } from 'react-icons/bs'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import cn from 'classnames'
 import styles from './Sidebar.module.scss'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/authContext';
 
 interface Props {
 }
 
 const Sidebar: FC<Props> = ({}: Props) => {
+  const navigate = useNavigate();
   const [isClosed, setIsClosed] = useState<boolean>(false)
 
   const {logout} = useAuth();
@@ -42,7 +43,7 @@ const Sidebar: FC<Props> = ({}: Props) => {
         <div className={styles.menu}>
           <ul className={styles.optionList}>
             <li className={styles.option}>
-              <NavLink to='/profile' end className={({isActive}) => cn({[styles.fadeOut]: isClosed, [styles.active]: isActive})}>
+              <NavLink to='/profile' end state={{closed: isClosed}} className={({isActive}) => cn({[styles.fadeOut]: isClosed, [styles.active]: isActive})}>
                 <CgProfile/>
                 <span>My Profile</span>
               </NavLink>
